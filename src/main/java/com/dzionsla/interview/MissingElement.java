@@ -13,10 +13,13 @@ public class MissingElement {
 	public MissingElement(int n) {
 		generateTable(0, n);
 		deleteElement(n);
-		findMissing(array);
+		findMissing1(array);
+		findMissing2(array);
 	}
 	
-	public static int generateRandomInt(int upperRange){
+	
+
+	private static int generateRandomInt(int upperRange){
 	    Random random = new Random();
 	    return random.nextInt(upperRange);
 	}
@@ -35,7 +38,7 @@ public class MissingElement {
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
 	
-	private int findMissing(ArrayList<Integer> arr) {
+	private int findMissing1(ArrayList<Integer> arr) {
 		int missingValue = 0;
 		boolean elementFound;
 		 
@@ -57,6 +60,22 @@ public class MissingElement {
 		System.out.println("\nSzukana liczba to: " + missingValue);
 		
 		return missingValue;
+	}
+	
+	private int findMissing2(ArrayList<Integer> array) {
+		
+		int sum = Stream.iterate(1, n -> n + 1)
+				.limit(array.size())
+    			.mapToInt(n -> n)
+    			.sum();
+		
+		int sumArray = array.stream()
+				.mapToInt(n -> n)
+				.sum();
+		
+		System.out.println("\nSzukana liczba to: " + (sum - sumArray));
+		
+		return sum - sumArray;	
 	}
 	
 
