@@ -12,15 +12,68 @@ public class Calculator {
 	int startValue;
 	
 	public Calculator(int startValue, List<String> data) {
+		// Podejœcie numer I
 		this.startValue = startValue;
-		//this.data = data;
+		
 		readValues(data);
-		//System.out.println();
 		readCommands(data);
+		calculate();
+		
+		// Podejœcie numer II
+		
+		
+		
 		
 	}
 	
 	private void calculate() {
+		int ctr = 0;
+		int sum = 0;
+		
+		for (String cmd : commands) {
+			switch (cmd) {
+			case "add":
+				if (ctr == 0) {
+					sum = add(startValue, values.get(ctr));
+				} else {
+					sum = add(sum, values.get(ctr));
+				}
+				break;
+			case "subtract":
+				if (ctr == 0) {
+					sum = subtract(startValue, values.get(ctr));
+				} else {
+					sum = subtract(sum, values.get(ctr));
+				}
+				break;
+			case "multiply":
+				if (ctr == 0) {
+					sum = multiply(startValue, values.get(ctr));
+				} else {
+					sum = multiply(sum, values.get(ctr));
+				}
+				break;
+			case "divide":
+				if (ctr == 0) {
+					sum = divide(startValue, values.get(ctr));
+				} else {
+					sum = divide(sum, values.get(ctr));
+				}
+				break;
+			case "apply":
+				if (ctr == 0) {
+					System.out.println(startValue);
+				} else {
+					System.out.println(sum);
+				}
+				break;
+
+			default:
+				break;
+			}
+			
+			ctr++;
+		}
 		
 	}
 	
@@ -73,6 +126,6 @@ public class Calculator {
 	    DIVIDE,
 	    APPLY;
 	}
-
+	
 	
 }
