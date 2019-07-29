@@ -24,7 +24,7 @@ public class App {
 		try {
 			data = FileReader.readAsList(path);
 			String est = FileReader.readAsString(path);
-			Calculator calc = new Calculator(FileReader.readLastValue());
+			Calculator calc = new Calculator(FileReader.readLastValue(), data);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
