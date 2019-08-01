@@ -7,6 +7,7 @@ import com.dzionsla.interview.Calculator;
 import com.dzionsla.interview.FileReader;
 import com.dzionsla.interview.LancuchBialkowy;
 import com.dzionsla.others.MaszynaLosujaca;
+import com.dzionsla.others.MatcherPattern;
 
 public class App {
 
@@ -37,7 +38,11 @@ public class App {
 		
 		// Maszyna losuj¹ca
 		//FileReader.readCSV("test1.csv");
-		MaszynaLosujaca ml = new MaszynaLosujaca("test2.csv", 2);
+		//MaszynaLosujaca ml = new MaszynaLosujaca("C:\\projects\\java\\SamouczekProgramisty\\src\\main\\resources\\test2.csv", 2);
+		
+		
+		// REGEX MATCHER PATTERN
+		MatcherPattern.printMatcher();
 		
 		//Lambda l = new Lambda();
 		//l.lambdaComplexArrays();

@@ -52,7 +52,7 @@ public class MaszynaLosujaca {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, HashMap::new));
 	}
 	
-	private boolean findEmail(String str) {
+	public static boolean findEmail(String str) {
 		if (str.contains("@")) {
 			return true;
 		} else {
