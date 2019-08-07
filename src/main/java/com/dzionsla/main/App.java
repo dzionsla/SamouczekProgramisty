@@ -1,13 +1,8 @@
 package com.dzionsla.main;
 
 import java.io.IOException;
-import java.util.List;
 
-import com.dzionsla.interview.Calculator;
-import com.dzionsla.interview.FileReader;
-import com.dzionsla.interview.LancuchBialkowy;
-import com.dzionsla.others.MaszynaLosujaca;
-import com.dzionsla.others.MatcherPattern;
+import com.dzionsla.others.FunctInterf;
 
 public class App {
 
@@ -42,7 +37,15 @@ public class App {
 		
 		
 		// REGEX MATCHER PATTERN
-		MatcherPattern.printMatcher();
+		//MatcherPattern.printMatcher();
+		
+		// Interface function
+		FunctInterf f = new FunctInterf();
+		//f.interfFunct();
+		//f.interfConsumer();
+		//f.interfSupplier();
+		f.interfPredicate();
+		
 		
 		//Lambda l = new Lambda();
 		//l.lambdaComplexArrays();
