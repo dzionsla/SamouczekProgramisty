@@ -34,6 +34,40 @@ public class Orientation{
 		public String toString() {
 			return "XY [x=" + x + ", y=" + y + "]";
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getEnclosingInstance().hashCode();
+			result = prime * result + x;
+			result = prime * result + y;
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			XY other = (XY) obj;
+			if (!getEnclosingInstance().equals(other.getEnclosingInstance()))
+				return false;
+			if (x != other.x)
+				return false;
+			if (y != other.y)
+				return false;
+			return true;
+		}
+
+		private Orientation getEnclosingInstance() {
+			return Orientation.this;
+		}
+		
+		
 		
 		
 	}
@@ -74,6 +108,8 @@ public class Orientation{
 		RIGHT;
 	}
 	
+	public boolean found;
+	public static XY f;
 	public static int x;
 	public static int y;
 	private Orient orient;
@@ -132,20 +168,36 @@ public class Orientation{
 			XY point = new XY(x, y);
 			l.add(point);
 		} else {
-			int localX = Math.abs(x - l.get(l.size() - 1).getX());
-			int localY = Math.abs(y - l.get(l.size() - 1).getY());
+			int localX = x - l.get(l.size() - 1).getX();
+			int localY = y - l.get(l.size() - 1).getY();
 			
 			if (localX != 0) {
-				for (int i = localX - 1; i >= 0; i--) {
-					l.add(new XY(x - i, y));
+				for (int i = Math.abs(localX) - 1; i >= 0; i--) {
+					XY n = new XY(localX > 0 ? x - i : x + i, y);
+					if (found == false && l.contains(n)) {
+						found = true;
+						f = n;
+					}
+					l.add(n);
 				}
 			} else {
-				for (int i = localY - 1; i >= 0; i--) {
-					l.add(new XY(x, y - i));
+				for (int i = Math.abs(localY) - 1; i >= 0; i--) {
+					XY n = new XY(x, localY > 0 ? y - i : y + i);
+					if (found == false && l.contains(n)) {
+						found = true;
+						f = n;
+					}
+					l.add(n);
 				}
 			}
-		}	
+		}
 		
+	}
+	
+	public boolean check(XY points) {
+		
+		
+		return true;
 	}
 	
 	public void showSaved() {
@@ -155,7 +207,7 @@ public class Orientation{
 	public static void print() {
 		System.out.println("Wspolrzedne: " + (x > 0 ? "Wschod": " Zachod") + " - " + x + (y > 0 ? "   Polnoc": " Poludnie") + " - " + y);
 		System.out.println("Od pozycji startowej blokow: " + (Math.abs(x)+Math.abs(y)));
-		//System.out.println(l.size());
+		System.out.println(l.size() + " - " + f);
 	}
 }
 
