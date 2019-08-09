@@ -8,9 +8,9 @@ public class App {
 
 	public static void main(String[] args) throws IOException {
 		ReadFile read = new ReadFile();
-		read.readAsList("C:\\projects\\java\\SamouczekProgramisty\\src\\main\\resources\\day02_input.txt");
-		
-		
+
+		MapMovement movement = new MapMovement(read.readAsList("C:\\projects\\java\\SamouczekProgramisty\\src\\main\\resources\\day02_input.txt"));
+		//movement.passwordLine(line)
 		
 	}
 
