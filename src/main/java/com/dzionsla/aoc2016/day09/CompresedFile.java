@@ -7,26 +7,45 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CompresedFile {
-	String path = "C:\\projects\\java\\SamouczekProgramisty\\src\\main\\resources\\day09_input1.txt";
+	String path = "C:\\projects\\java\\SamouczekProgramisty\\src\\main\\resources\\day09_input.txt";
 	String data;
 	String o = "";
+	int q,w,z;
 	
 	
 	public CompresedFile() throws IOException {
 		data = readAsString(path);
 		System.out.println(data);
-		//System.out.println(findMarker(data));
-		findM(data);
+		
+		System.out.println("Pierwsza czesc:");
+		findM1(data);
+		System.out.println("Druga czesc:");
+		//findM2(data);
 	}
 	
-	public void findM(String str) {
+	public String findM1(String str) {
+		String out = "";
+		for (int i = 0; i < str.length(); i++) {
+			if (str.charAt(i) == '(') {				
+				out = findMarker1(str.substring(i));
+				i = i + q + w;
+			} else {
+				out = String.valueOf(str.charAt(i));
+			}
+			o = o + out;
+		}
+		System.out.println(o + "  \n- dlugosc:" + o.length() + "\n\n");
+		return o;
+	}
+	
+	public void findM2(String str) {
 		String out = str;
 		String o = "";
 		int len = str.length();
 		for (int i = 0; i < len; i++) {
 			if (out.charAt(i) == '(') {
 				
-				out = findMarker(out.substring(i));
+				out = findMarker2(out.substring(i));
 				//o = out;
 				i = -1;
 				len = out.length();
@@ -36,21 +55,28 @@ public class CompresedFile {
 			}
 			//System.out.println(out);
 		}
-		System.out.println(o);
-		//System.out.println(out);
+		System.out.println(o + "    - dlugosc: " + o.length());
 	}
 	
-	public String findMarker1(String str, int j) {
-		int temp = j;
+	public String findMarker1(String str) {
+		String s = str;
+		StringBuilder sb = new StringBuilder();
 		Pattern p = Pattern.compile("\\(\\w+\\)");
-		Matcher m = p.matcher(str);
+		Matcher m = p.matcher(s);
 		
+		m.find();
+		//System.out.println(m.group() + ": " + findLength(m.group()) + ":"+ findTimes(m.group()) + " (" + m.start() + ":" + m.end() + ")  -  ");
+		for (int i = 0; i < findTimes(m.group()); i++) {
+			sb.append(s.substring(m.end(), m.end() + findLength(m.group())));
+		}
+			//s.replace(s.substring(m.start(), m.end()+findLength(m.group())), "");
+		q = m.start();
+		w = m.end()+findLength(m.group()) - 1;
 		
-		
-		return str;
+		return sb.toString();
 	}
 	
-	public String findMarker(String str) {
+	public String findMarker2(String str) {
 		StringBuilder sb = new StringBuilder();
 
 		String out = "";
@@ -80,7 +106,7 @@ public class CompresedFile {
 			//System.out.println(sb.toString());
 			//out = sb.toString() + str.substring(m.end() + findLength(m.group()));
 			sb.append(str.substring(m.end() + findLength(m.group())));
-//
+
 			//System.out.println(sb.toString() + " 12");
 			//sb.append(sb.toString());
 			//System.out.println(sb.toString() + " 33333333 ");
