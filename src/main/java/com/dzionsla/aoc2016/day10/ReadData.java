@@ -42,9 +42,9 @@ public class ReadData {
 		}
 	}
 	
-	boolean containsObjectOfType(Object o){
+	boolean containsObjectOfType(Bot bot){
 		for (int i=0; i < bots.size(); i++){
-			if (bots.get(i).getClass().equals(o.getClass())){
+			if (bots.get(i).equals(bot)){
 				return true;
 			}
 		}
