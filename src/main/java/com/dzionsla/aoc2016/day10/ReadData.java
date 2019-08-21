@@ -9,9 +9,8 @@ import java.util.stream.Collectors;
 
 public class ReadData {
 	private List<String> data;
-	private List<String> botGives = new ArrayList<String>();
 	private List<Bot> bots = new ArrayList<Bot>();
-	private String dir = "C:\\projects\\java\\SamouczekProgramisty\\src\\main\\resources\\day10_input1.txt";
+	private String dir = "C:\\projects\\java\\SamouczekProgramisty\\src\\main\\resources\\day10_input.txt";
 	
 	public ReadData() throws IOException {
 		readData(dir);	
@@ -19,7 +18,7 @@ public class ReadData {
 		
 		readBots();
 		bots.forEach(n -> System.out.println(n.toString()));
-		botGives.forEach(n -> System.out.println(n));
+
 	}
 	
 	public List<String> getData() {
@@ -34,9 +33,17 @@ public class ReadData {
 		return instruction.startsWith("bot");
 	}
 	
-	public void addBot(Bot bot) {
+	public void addBot1(Bot bot) {
 		if (containsObjectOfType(bot)) {
-			bots.get(bots.indexOf(bot)).consumeData(bot.getLower());
+			bots.get(bots.indexOf(bot)).consumeData1(bot.getLower());
+		} else {
+			bots.add(bot);
+		}
+	}
+	
+	public void addBot2(Bot bot) {
+		if (containsObjectOfType(bot)) {
+			bots.get(bots.indexOf(bot)).consumeData2(bot.getIdBotLow(), bot.isLowValueToBot(), bot.getIdBotHigh(), bot.isHighValueToBot());
 		} else {
 			bots.add(bot);
 		}
@@ -54,15 +61,19 @@ public class ReadData {
 	public void readBots() {
 		for (String instruction : data) {
 			if (isLoad(instruction)) {
-				LoadCommand ec = new LoadCommand(instruction);
-				Bot bot = new Bot(ec.getBotID());
-				bot.consumeData(ec.getValue());
-				addBot(bot);
-				//bots.add(bot);
-				//data.remove(data.indexOf(instruction));
+				LoadCommand lc = new LoadCommand(instruction);
+				Bot bot = new Bot(lc.getBotID());
+				bot.consumeData1(lc.getValue());
+				addBot1(bot);
 			}
 			else {
-				botGives.add(instruction);
+				EmitCommand ec = new EmitCommand(instruction);
+				Bot bot = new Bot(ec.getBotID());
+				bot.setHighValueToBot(ec.isBotHigh());
+				bot.setLowValueToBot(ec.isBotLow());
+				bot.setIdBotHigh(ec.getValueHigh());
+				bot.setIdBotLow(ec.getValueLow());
+				addBot2(bot);
 			}
 		}
 	}
