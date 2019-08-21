@@ -130,6 +130,5 @@ public class Bot {
 			return false;
 		return true;
 	}
-    
-    
+	
 }

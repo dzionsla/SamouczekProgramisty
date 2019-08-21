@@ -14,15 +14,30 @@ public class ReadData {
 	
 	public ReadData() throws IOException {
 		readData(dir);	
-		data.forEach(n -> System.out.println(n));
+		//data.forEach(n -> System.out.println(n));
 		
 		readBots();
-		bots.forEach(n -> System.out.println(n.toString()));
-
+		//bots.forEach(n -> System.out.println(n.toString()));
+		
+		runSequence();
+		
 	}
-	
+
 	public List<String> getData() {
 		return data;
+	}
+	
+	private void runSequence() {
+		for (Bot bot : bots) {
+			findBothValues(bot);
+		}
+		
+	}
+	
+	public void findBothValues(Bot bot) {
+		if (bot.getLower() != null && bot.getHigher() != null) {
+			System.out.println(bot);
+		}
 	}
 	
 	public boolean isLoad(String instruction) {
