@@ -11,6 +11,7 @@ public class ReadData {
 	private List<String> data;
 	private List<Bot> bots = new ArrayList<Bot>();
 	private String dir = "C:\\projects\\java\\SamouczekProgramisty\\src\\main\\resources\\day10_input.txt";
+	private Integer bin0, bin1, bin2;
 	
 	public ReadData() throws IOException {
 		readData(dir);	
@@ -18,8 +19,10 @@ public class ReadData {
 		
 		readBots();
 		//bots.forEach(n -> System.out.println(n.toString()));
+		for (int i = 0; i < 25; i++) {
+			runSequence();
+		}
 		
-		runSequence();
 		
 	}
 
@@ -29,15 +32,87 @@ public class ReadData {
 	
 	private void runSequence() {
 		for (Bot bot : bots) {
-			findBothValues(bot);
+			if (findBothValues(bot)) {
+				// Part 1
+//				if (checkBotPart1(bot)) {
+//					System.out.println(bot);
+//					break;
+//				}
+				// Part 2
+				if (checkBotPart2()) {
+					System.out.println( bin0 + "-" + bin1 + "-" + bin2);
+					System.out.println("Multiply: " + (bin0*bin1*bin2));
+				}
+				System.out.println(bot);
+				updateWhen2Values(bot);
+
+				
+			}
 		}
-		
+	}
+	public Boolean checkBotPart2() {
+		return bin0 != null && bin1 != null && bin2 != null;
 	}
 	
-	public void findBothValues(Bot bot) {
-		if (bot.getLower() != null && bot.getHigher() != null) {
-			System.out.println(bot);
+	public Boolean checkBotPart1(Bot bot) {
+		return bot.getHigher().equals(61) && bot.getLower().equals(17);
+	}
+	
+	public void updateWhen2Values(Bot bot) {
+		Bot localBot = bots.get(bots.indexOf(bot));
+		Boolean lowValueToBot = localBot.isLowValueToBot();
+		Boolean highValueToBot = localBot.isHighValueToBot();
+		Integer idBotLow = localBot.getIdBotLow();
+		Integer idBotHigh = localBot.getIdBotHigh();
+		Integer lowerValue = localBot.getLower();
+		Integer higherValue = localBot.getHigher();
+//		System.out.println(bots.get(getPosByID(idBotLow)));
+//		System.out.println(bots.get(getPosByID(idBotHigh)));
+		if (lowValueToBot) {
+			bots.get(getPosByID(idBotLow)).consumeData1(lowerValue);
+			localBot.setLower(null);
+		} else {
+			if (idBotLow == 0) {
+				bin0 = lowerValue;
+			} else if (idBotLow == 1) {
+				bin1 = lowerValue;
+			} else if (idBotLow == 2) {
+				bin2 = lowerValue;
+			}
 		}
+		
+		if (highValueToBot) {
+			bots.get(getPosByID(idBotHigh)).consumeData1(higherValue);
+			localBot.setHigher(null);
+		} else {
+			if (idBotHigh == 0) {
+				bin0 = lowerValue;
+			} else if (idBotHigh == 1) {
+				bin1 = lowerValue;
+			} else if (idBotHigh == 2) {
+				bin2 = lowerValue;
+			}
+		}
+		
+//		System.out.println(bots.get(getPosByID(idBotLow)));
+//		System.out.println(bots.get(getPosByID(idBotHigh)));
+	}
+	
+	public Integer getPosByID(Integer ID) {
+		for (Bot bot : bots) {
+			if (bot.getId().equals(ID)) {
+				return bots.indexOf(bot);
+			}
+		}
+		return null;
+	}
+	
+	public Boolean findBothValues(Bot bot) {
+		return bot.getLower() != null && bot.getHigher() != null;
+	}
+	
+	public Boolean findOneValue(Bot bot) {
+		return bot.getLower() != null ^ bot.getHigher() != null;
 	}
 	
 	public boolean isLoad(String instruction) {
