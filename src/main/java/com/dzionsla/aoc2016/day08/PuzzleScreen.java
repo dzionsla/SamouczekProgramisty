@@ -235,5 +235,6 @@ public class PuzzleScreen {
 
 	public void readData(String path) throws IOException {
 		data = Files.lines(Paths.get(path), StandardCharsets.UTF_8).collect(Collectors.toList());
+		//data = Files.readAllLines(Paths.get(path))	;
 	}
 }
